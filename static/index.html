@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MACD Stock Predictor - ML Enhanced</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>📈 MACD Stock Predictor</h1>
+            <p class="subtitle">Advanced Technical Analysis with LSTM Predictions & Sentiment Analysis</p>
+        </header>
+
+        <div class="controls-section">
+            <div class="control-group">
+                <label for="ticker">Stock Ticker</label>
+                <input type="text" id="ticker" placeholder="e.g., AAPL, GOOGL, MSFT, TCS.NS" value="AAPL">
+            </div>
+
+            <div class="control-group">
+                <label for="period">Period</label>
+                <select id="period">
+                    <option value="1mo">1 Month</option>
+                    <option value="3mo">3 Months</option>
+                    <option value="6mo">6 Months</option>
+                    <option value="1y" selected>1 Year</option>
+                    <option value="2y">2 Years</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="interval">Interval</label>
+                <select id="interval">
+                    <option value="15m">15 Minutes</option>
+                    <option value="30m">30 Minutes</option>
+                    <option value="1h">1 Hour</option>
+                    <option value="1d" selected>1 Day</option>
+                    <option value="1wk">1 Week</option>
+                </select>
+            </div>
+
+            <button id="analyzeBtn" class="btn-primary">Analyze Stock</button>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">💰</div>
+                <div class="metric-content">
+                    <span class="metric-label">Total Profit</span>
+                    <span class="metric-value" id="totalProfit">$0.00</span>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon">📊</div>
+                <div class="metric-content">
+                    <span class="metric-label">Avg Profit %</span>
+                    <span class="metric-value" id="avgProfit">0.00%</span>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon">🔄</div>
+                <div class="metric-content">
+                    <span class="metric-label">Total Trades</span>
+                    <span class="metric-value" id="numTrades">0</span>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon">🎯</div>
+                <div class="metric-content">
+                    <span class="metric-label">Win Rate</span>
+                    <span class="metric-value" id="winRate">0.00%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <div class="chart-header">
+                <h2>Price Chart</h2>
+                <div class="legend">
+                    <span class="legend-item buy">● Buy Signal</span>
+                    <span class="legend-item sell">● Sell Signal</span>
+                </div>
+            </div>
+            <canvas id="priceChart"></canvas>
+        </div>
+
+        <div class="chart-section">
+            <div class="chart-header">
+                <h2>MACD Indicator</h2>
+                <div class="legend">
+                    <span class="legend-item macd">— MACD</span>
+                    <span class="legend-item signal">— Signal Line</span>
+                </div>
+            </div>
+            <canvas id="macdChart"></canvas>
+        </div>
+
+        <div class="chart-section" id="predictionSection">
+            <div class="chart-header">
+                <h2>📊 Price Predictions (LSTM)</h2>
+            </div>
+            <canvas id="predictionChart"></canvas>
+        </div>
+
+        <div class="sentiment-section" id="sentimentSection">
+            <div class="sentiment-header">
+                <h2>💭 Market Sentiment</h2>
+            </div>
+            <div class="sentiment-content">
+                <p style="color: var(--text-secondary); text-align: center; padding: 2rem;">
+                    Loading sentiment data...
+                </p>
+            </div>
+        </div>
+
+        <div class="signals-section">
+            <div class="signals-column">
+                <h3>🟢 Buy Signals</h3>
+                <div id="buySignals" class="signals-list"></div>
+            </div>
+            <div class="signals-column">
+                <h3>🔴 Sell Signals</h3>
+                <div id="sellSignals" class="signals-list"></div>
+            </div>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Analyzing stock data...</p>
+        </div>
+
+        <div id="error" class="error"></div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>
